@@ -25,7 +25,7 @@
 #include "FreeRTOS.h"
 #include "FreeRTOSConfig.h"
 #include "task.h"
-#include "semphr.h"
+#include "stream_buffer.h"
 
 /* USER CODE END Includes */
 
@@ -35,8 +35,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
-
+#define sbiSTREAM_BUFFER_LENGTH_BYTES		( ( size_t ) 100 )
+#define sbiSTREAM_BUFFER_TRIGGER_LEVEL_10	( ( BaseType_t ) 10 )
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -70,16 +70,31 @@
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi1;
 
+UART_HandleTypeDef huart2;
+
+/* The stream buffer that is used to send data from an interrupt to the task. */
+static StreamBufferHandle_t xStreamBuffer = NULL;
+static StreamBufferHandle_t xStreamBuffer2 = NULL;
+
+static const char * pcStringToSend = "ISR to handler\r\n";
+static const char * pcStringToSend2 = "handler to task\r\n";
+
+char cRxBuffer[ 100 ];
+char cRxBuffer2 [100];
+
+size_t ret = 0;
+
 /* USER CODE BEGIN PV */
-SemaphoreHandle_t xSemaphore;
+//SemaphoreHandle_t xSemaphore;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI1_Init(void);
-void green_blink();
-void orange_blink();
+static void MX_USART2_UART_Init(void);
+void green_blink(void);
+void orange_blink(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -144,9 +159,20 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI1_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   MEMS_init();
-  xSemaphore = xSemaphoreCreateBinary();
+	/* Create the stream buffer that sends data from the interrupt to the
+	task, and create the task. */
+	xStreamBuffer = xStreamBufferCreate( /* The buffer length in bytes. */
+										 sbiSTREAM_BUFFER_LENGTH_BYTES,
+										 /* The stream buffer's trigger level. */
+										 sbiSTREAM_BUFFER_TRIGGER_LEVEL_10 );
+	xStreamBuffer2 = xStreamBufferCreate( /* The buffer length in bytes. */
+											 sbiSTREAM_BUFFER_LENGTH_BYTES,
+											 /* The stream buffer's trigger level. */
+											 sbiSTREAM_BUFFER_TRIGGER_LEVEL_10 );
+  //xSemaphore = xSemaphoreCreateBinary();
   xTaskCreate(green_blink,"task1",1024,(void *)1,1,NULL);
   xTaskCreate(orange_blink,"task2",1024,(void *)1,3,NULL);
   vTaskStartScheduler();
@@ -241,6 +267,39 @@ static void MX_SPI1_Init(void)
 }
 
 /**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART2_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 115200;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -291,6 +350,15 @@ void green_blink()
 {
 	for(;;)
 	{
+		if(ret > 0){
+			xStreamBufferReceive(
+								  xStreamBuffer2,
+								  ( void * ) &( cRxBuffer2[ 0 ]) ,
+								  sizeof( char )*100,
+								  portMAX_DELAY );
+			HAL_UART_Transmit(&huart2,(uint8_t*)cRxBuffer2,strlen(cRxBuffer2),0xffff);
+			ret = 0;
+		}
 	  HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 	  vTaskDelay(1000);
 	}
@@ -300,10 +368,24 @@ void orange_blink()   //handler
 	 for(;;)                         //interrupt is disabled until we execute MEMS_READ
 	 {
 		  int8_t data;
-		  xSemaphoreTake(xSemaphore,portMAX_DELAY);
+		  BaseType_t xNextByte = 0;
+		  const TickType_t x100ms = pdMS_TO_TICKS( 100 );
+		  ret = xStreamBufferReceive( /* The stream buffer data is being received from. */
+								  xStreamBuffer,
+								  /* Where to place received data. */
+								  ( void * ) &( cRxBuffer[ xNextByte ] ),
+								  /* The number of bytes to receive. */
+								  sizeof( char )*100,
+								  /* The time to wait for the next data if the buffer
+								  is empty. */
+								  portMAX_DELAY );
 
+		  HAL_UART_Transmit(&huart2,(uint8_t*)cRxBuffer,strlen(cRxBuffer),0xffff);
+		  if(ret > 0){
+			  xStreamBufferSend(xStreamBuffer2,( const void * ) pcStringToSend2,  strlen(pcStringToSend)*4,x100ms);
+		  }
 		  int i=0;
-		  for(i = 0;i<5;i++)
+		  for(i = 0;i<3;i++)
 		  {
 			HAL_GPIO_WritePin(GPIOD,GPIO_PIN_13,GPIO_PIN_SET);
 			vTaskDelay(1000);
@@ -329,7 +411,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)   //ISR function
        {
            HAL_GPIO_WritePin(GPIOD,GPIO_PIN_14,GPIO_PIN_SET);
        }
-       if(xSemaphoreGiveFromISR(xSemaphore, &xHigherPriorityTaskWoken) == pdTRUE){
+       if(xStreamBufferSendFromISR( xStreamBuffer,( const void * )pcStringToSend,strlen(pcStringToSend)*4,NULL ) > 0){//xSemaphoreGiveFromISR(xSemaphore, &xHigherPriorityTaskWoken) == pdTRUE){
     	   HAL_GPIO_WritePin(GPIOD,GPIO_PIN_12,GPIO_PIN_RESET);
        }
 

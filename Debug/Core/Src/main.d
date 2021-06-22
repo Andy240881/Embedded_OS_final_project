@@ -27,19 +27,18 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOS.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOSConfig.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/projdefs.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/portable.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/deprecated_definitions.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/portable/ARM_CM4F/portmacro.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/mpu_wrappers.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOSConfig.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/task.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/list.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/semphr.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/queue.h \
- /Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/task.h
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOS.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOSConfig.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/projdefs.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/portable.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/deprecated_definitions.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/portable/ARM_CM4F/portmacro.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/mpu_wrappers.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOSConfig.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/task.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/list.h \
+ /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/stream_buffer.h
 
 ../Core/Inc/main.h:
 
@@ -99,28 +98,26 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOS.h:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOSConfig.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOS.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/projdefs.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOSConfig.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/portable.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/projdefs.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/deprecated_definitions.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/portable.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/portable/ARM_CM4F/portmacro.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/deprecated_definitions.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/mpu_wrappers.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/portable/ARM_CM4F/portmacro.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOSConfig.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/mpu_wrappers.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/task.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/FreeRTOSConfig.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/list.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/task.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/semphr.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/list.h:
 
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/queue.h:
-
-/Users/andy/Documents/Course/1(2)/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/task.h:
+/Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/FreeRTOS/include/stream_buffer.h:
