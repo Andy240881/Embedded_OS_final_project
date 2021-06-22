@@ -37,6 +37,8 @@
 /* USER CODE BEGIN PD */
 #define sbiSTREAM_BUFFER_LENGTH_BYTES		( ( size_t ) 100 )
 #define sbiSTREAM_BUFFER_TRIGGER_LEVEL_10	( ( BaseType_t ) 10 )
+/* A block time of 0 simply means, don't block. */
+#define mbaDONT_BLOCK				0
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -418,6 +420,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)   //ISR function
        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 
 
+}
+
+void vGenerateCoreBInterrupt( void * xUpdatedMessageBuffer )
+{
+	char msg[30];
+	memset(msg,'\0',sizeof(msg));
+	sprintf(msg,"sbSEND_COMPLETED\n\r");
+	HAL_UART_Transmit(&huart2,(uint8_t*)msg,strlen(msg),0xffff);
 }
 /* USER CODE END 4 */
 
