@@ -57,8 +57,8 @@ all: main-build
 main-build: Embedded_OS_Lab2-2_P76091307.elf secondary-outputs
 
 # Tool invocations
-Embedded_OS_Lab2-2_P76091307.elf: $(OBJS) $(USER_OBJS) /Users/andy/Documents/Course/Embedded\ System/Embedded_OS_Lab2-2_P76091307/STM32F407VGTX_FLASH.ld
-	arm-none-eabi-gcc -o "Embedded_OS_Lab2-2_P76091307.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/andy/Documents/Course/Embedded System/Embedded_OS_Lab2-2_P76091307/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Embedded_OS_Lab2-2_P76091307.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Embedded_OS_Lab2-2_P76091307.elf: $(OBJS) $(USER_OBJS) /home/eddie/STM32CubeIDE/workspace_1.5.1/Embedded_OS_Lab2-2_P76091307/STM32F407VGTX_FLASH.ld
+	arm-none-eabi-gcc -o "Embedded_OS_Lab2-2_P76091307.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/eddie/STM32CubeIDE/workspace_1.5.1/Embedded_OS_Lab2-2_P76091307/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Embedded_OS_Lab2-2_P76091307.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

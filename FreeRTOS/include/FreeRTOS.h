@@ -986,6 +986,10 @@ the Secure Side only. */
 	#define configRUN_FREERTOS_SECURE_ONLY 0
 #endif
 
+#ifndef configUSE_SB_COMPLETED_CALLBACK
+    #define configUSE_SB_COMPLETED_CALLBACK   0
+#endif
+
 /* Sometimes the FreeRTOSConfig.h settings only allow a task to be created using
  * dynamically allocated RAM, in which case when any task is deleted it is known
  * that both the task's stack and TCB need to be freed.  Sometimes the
